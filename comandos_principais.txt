@@ -1,0 +1,289 @@
+----- Aula 01 ----
+
+saber a versão do git
+# git version
+
+Criação de um repositório (local) vazio
+# git init
+
+Mostrar estrutura de pastas (no meu git não funciona o comando)
+# tree .git
+
+Realizar commit (exemplo)
+
+--Criando arquivos e seus conteúdos
+# echo a > a.txt
+# echo b > b.txt
+
+
+Adicionar arquivos para a staging area (o container para os arquivos que serão enviados para o respositório)
+
+# git add <nome_arquivo>
+exemplo:
+# git add a.txt
+
+Adicionar todos os arquivos que estão fora do container (não rastreados, fora da staging area)
+
+# git add -A (ou git add --all ou git add .)
+
+
+Olhar o container (saber quais são os arquivos não rastreados, o que foi adicionado, etc)
+
+# git status
+
+Realizar o commit (enviar arquivos para o repositório) com uma mensagem
+
+# git commit -m "mensagem_desejada"
+
+Ver os commits realizados (verificar a lista de commits)
+# git log
+
+visualizar os commits de forma mais organizada (em um linha)
+# git log --oneline
+
+
+----- Aula 02 ----
+* Verificar as Branches
+#git branch
+
+Brach padrão: master (sempre aponta para o último commit)
+
+* Criar uma branch
+# git branch <nome_branch>
+Exemplo: git branch feature01
+
+-> branches são referências (ponteiros) para determinado commit
+
+* Analisar as referências de cada branch
+
+Exemplo:
+# cat .git/refs/heads/master
+# cat .git/refs/heads/feature01
+
+* Fazer a visualização dos commits e branches 
+
+#git log --oneline --decorate
+
+* Também é possível saber a branch apontada pelo HEAD
+Obs.: O HEAD indica onde estamos (local de trabalho)
+Obs2.: A evolução do código (sequência de commits) segue a partir do local apontado por Head
+
+Exemplo:
+# cat .git/HEAD
+
+* Fazer a mudança de branch (realizar o "chaveamento" para uma branch)
+
+#git checkout feature01
+
+* Caso o programador esteja em um branch "anterior", é necessário usar o seguinte comando para visualizar os commits que estão "adiante".
+
+#git log --oneline --decorate --all
+
+Realizar o merge (ex.:merge no master)
+
+#git merge <branch> (Ao realizar o merge, todas as modificações presentes na branch especificada são "unidas", "transferidas" para a branch corrente)
+
+Situação: HEAD está apontando para master. E master está "atrás" de feature01 (essa branch está com as atualizações necessárias para master)
+
+-> Comando
+-> Exemplo: git merge feature01
+
+Mensagem após o comando: fast-foward[avanço rápido] (Ocorre apenas se não existirem divergências entre os branches.Consiste em uma atualização de referência. "Caminho feliz")
+
+* Excluir branch
+#git branch -d <nome_branch>
+
+#git branch -d feature01
+
+* Realizar o checkout (mudança de branch. O HEAD apontará para a branch desejada) e criar uma branch ao mesmo tempo
+
+#git checkout -b feature02
+
+*Situação: em master é criado um arquivo e em feature02 é criado outro. Nesse caso, temos duas branches com arquivos distintos (uma divergência é percebida. Lembrando que divergência é diferente de conflito).
+
+-- Visualizar os caminhos dos commits (uma visão "mais gráfica") e identificar divergências
+
+# git log --oneline --decorate --all --graph
+
+Obs: Recursive strategy -> usada quando existe divergência entre branches e se faz necessário a realização de um novo commit para uni-las.
+
+* Excluir branch feature02 (Exemplo de situação: os trabalhos na branch foram concluidos e ela não é mais necessária)
+
+# git branch -d feature02
+
+--> Lidar com conflito
+
+Situação: um mesmo arquivo é criado para dois branches (master e feature03), mas o conteúdo dele é diferente em cada branch.
+
+# git checkout -b feature03
+
+# echo g2 > g.txt (criação do arquivo g.txt com conteúdo "g2")
+
+[comandos de adição de arquivo e commit]
+
+* Mudança para a branch 'master'
+# git checkout master
+
+* Inclusão de arquivo g.txt com conteúdo diferente
+# echo g1 > g.txt
+
+[comandos de inclusão do arquivo e commit]
+
+Reforçando: Nesse ponto existem duas ramificações (branches) que possuem o mesmo arquivo, mas o conteúdo dele é distinto em cada branch. CONFLITO GERADO!
+
+* Realizando o merge
+
+# git merge feature03
+(mensagem é exibida informando que o conflito precisa ser resolvido,ou seja, é preciso escolher o conteúdo desejado para o arquivo. Depois o commit pode ser feito)
+
+# git status
+
+* Resolver conflito
+
+# vim g.txt
+(editar arquivo mantendo o conteúdo desejado)
+
+[Fazer a inclusão do arquivo na staging area e commit]
+
+# git log --oneline --decorate --all --graph
+Obs.: É observado o merge realizado
+
+--Excluir a feature03 (ela não será necessária)
+# git branch -d feature03
+
+------ Aula 03 (Stash) ------ 
+
+Mover arquivos adicionados ou modificados (porém, não "commitados") para uma área chamada stash
+
+# git stash save <identificador>
+
+->Exemplo:
+# git stash save "i.txt" (o identificador não tem relação com o arquivo)
+
+Listagem dos conteúdos mantidos na stash
+
+# git stash list
+
+Incluir o arquivo que ficou mantido em stash (incluir as mudanças mantidas em stash)
+
+#git stash appply <referência_listagem_stash>
+
+Exemplo:
+git stash apply stash@{2}
+
+Apagar as referências do que está no stash
+
+#git stash drop <referência_listagem_stash>
+
+Exemplo:
+git stash drop stash@{0}
+
+Evitar a realização dos comandos apply e drop
+#git stash pop (desempilha a última referência que está na lista. O comando realiza o apply e o drop ao mesmo tempo)
+
+Criar uma nova branch a partir de um stash
+#git stash branch feature05
+
+
+-------- Aula 04 (Contribuindo com um repositório remoto) ------- 
+-> push (empurrar, ação de atualizar uma referência remota a partir de uma referência local)
+
+GitHub : plataforma de compartilhamento e hospedagem de código (no github podemos criar repositórios de código)
+
+Criar um repositório remoto chamado "origin"
+# git remote add origin <url_repositorio>
+
+--> Exemplo:
+# git remote add origin https://github.com/heitormariano/gitstudies.git
+
+Conferir a presença do repositório
+# git remote
+
+Para ver mais detalhes sobre o repositório
+# git remote -v
+
+* Comando Push (Empurrar o "grafo de commits" para o origin a partir do master)
+# git push origin master
+
+* Comando Pull (puxar, ação de atualizar uma referência local a partir de uma referência remota)
+
+Comando para puxar atualizações (Obs.: o pull realiza merge automaticamente. Caso não existam conflitos, funcionará sem problemas. Ocorre o "fast-forward")
+
+# git pull origin master
+
+* Clonar o repositório [útil quando estamos realizando contribuições com um repositório remoto. Também usado quando desejamos realizar os comandos de envio (push) em determinado repositório e de obtenção de código atualizado (pull) em outro (dois repositórios são adotados)]
+
+# git clone [URL_repositorio_remoto] [nome_repositorio(pasta)_diferente_se_desejar]
+
+Obs.: Caso não seja especificado um nome diferente para o repositório (pasta), será criada uma pasta com o mesmo nome definido no repositório do GitHub.
+
+Exemplo: 
+# git clone https://github.com/heitormariano/gitstudies.git projeto2
+
+--Ver em detalhes dos commits
+
+# git log --oneline --decorate --all --graph
+
+--Situação:
+
+# cd projeto2
+
+# echo h > h.txt
+
+# git add -A
+
+# git commit -m "h.txt"
+
+# git push origin master
+
+# cd projeto
+
+# git pull origin master
+
+
+** Comando Fetch
+
+O fetch realiza o "pull pela metade" (traz atualizações, aplica tais alterações e origin/master fica com a referência. Não é feito merge de "master" com "orgin/master")
+
+--> Em outras palavras: a referência "origin/master" fica na frente de "master"
+
+--Situação:
+
+# cd projeto2
+
+# echo i > i.txt
+
+# git add -A
+
+# git commit -m "i.txt"
+
+# git push origin master
+
+--> uso do comando fetch no repositório(pasta) do projeto (Lembrando que a branch master é a que estará sendo usada)
+
+# cd projeto
+
+# git fetch
+
+Obs.: nesse momento as atualizações são obtidas para a referência "origin/master". Essa referência fica à frente de "master". Usar comando "git log" para visualizar.
+
+# git log --oneline --decorate --all --graph
+
+-- Comando diff (verficar as diferenças entre as referências)
+
+->Verificar as diferenças entre "master" e "origin/master")
+
+# git diff master origin/master
+
+* Realizando o merge
+
+# git merge origin/master
+
+-> comentário: nesse caso o merge é realizado a partir de origin/master (referência do repositório remoto), uma vez que ele é o mais atual
+
+Obs.: Caso existam conflitos será preciso, naturalmente, tratá-los antes de realizar o merge.
+
+# git log --oneline --decorate --all --graph
+
+
+------------- Aula05 ---------------------
