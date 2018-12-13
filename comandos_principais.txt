@@ -243,8 +243,9 @@ Exemplo:
 
 ** Comando Fetch
 
-O fetch realiza o "pull pela metade" (traz atualizações, aplica tais alterações e origin/master fica com a referência. Não é feito merge de "master" com "orgin/master")
+O fetch realiza o "pull pela metade" (traz atualizações, baixa os commits, arquivos e referências do repositório remoto para o respositório local. Não é feito merge de "master" com "orgin/master")
 
+--> O comando ajuda a ver o que todo mundo está trabalhando (ajuda a visualizar mudanças presentes no repo remoto e que não estão no repo local)
 --> Em outras palavras: a referência "origin/master" fica na frente de "master"
 
 --Situação:
