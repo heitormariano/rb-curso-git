@@ -6,8 +6,10 @@ saber a versão do git
 Criação de um repositório (local) vazio
 # git init
 
-Mostrar estrutura de pastas (no meu git não funciona o comando)
+Mostrar estrutura de pastas 
 # tree .git
+
+Obs.: o comando tree funciona no cmd (windows). No bash do git o comando não é reconhecido
 
 Realizar commit (exemplo)
 
