@@ -77,6 +77,13 @@ Exemplo:
 
 #git checkout feature01
 
+[operações que podem ser realizadas após a criação da branch]
+echo 'teste' > teste.txt
+
+git add -A
+
+git commit -m "incluindo novo arquivo"
+
 * Caso o programador esteja em um branch "anterior", é necessário usar o seguinte comando para visualizar os commits que estão "adiante".
 
 #git log --oneline --decorate --all
