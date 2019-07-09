@@ -229,7 +229,7 @@ Obs.: Caso não seja especificado um nome diferente para o repositório (pasta), s
 Exemplo: 
 # git clone https://github.com/heitormariano/gitstudies.git projeto2
 
---Ver em detalhes dos commits
+--Ver em detalhes os commits
 
 # git log --oneline --decorate --all --graph
 
