@@ -94,7 +94,7 @@ Realizar o merge (ex.:merge no master)
 
 #git merge <branch> (Ao realizar o merge, todas as modificações presentes na branch especificada são "unidas", "transferidas" para a branch corrente)
 
-Situação: HEAD está apontando para master. E master está "atrás" de feature01 (essa branch está com as atualizações necessárias para master)
+Situação: HEAD está apontando para master(em outras palavras, mas é a branch corrente, em uso). E master está "atrás" de feature01 (essa branch está com as atualizações necessárias para master)
 
 -> Comando
 -> Exemplo: git merge feature01
