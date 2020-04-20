@@ -2,6 +2,7 @@
 
 saber a versão do git
 # git version
+# outro comando: git --version
 
 Criação de um repositório (local) vazio
 # git init
@@ -10,6 +11,7 @@ Mostrar estrutura de pastas
 # tree .git
 
 Obs.: o comando tree funciona no cmd (windows). No bash do git o comando não é reconhecido
+Obs-2.: no Ubuntu 18.04 (em meu pc) foi necessário realizar a instalação do tree (comando sudo apt install tree, por exemplo)
 
 Realizar commit (exemplo)
 
@@ -29,7 +31,7 @@ Adicionar todos os arquivos que estão fora do container (não rastreados, fora da
 # git add -A (ou git add --all ou git add .)
 
 
-Olhar o container (saber quais são os arquivos não rastreados, o que foi adicionado, etc)
+Olhar o container (saber quais são os arquivos não rastreados, visualizar aqueles que já foram adicionados, etc)
 
 # git status
 
