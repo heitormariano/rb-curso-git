@@ -116,6 +116,9 @@ Mensagem após o comando: fast-foward[avanço rápido] (Ocorre apenas se não existi
 
 # git log --oneline --decorate --all --graph
 
+Comando para realizar o merge de master (branch em uso) com a branch feature02
+# git merge feature02
+
 Obs: Recursive strategy -> usada quando existe divergência entre branches e se faz necessário a realização de um novo commit para uni-las (O commit é realizado automaticamente).
 
 * Excluir branch feature02 (Exemplo de situação: os trabalhos na branch foram concluidos e ela não é mais necessária)
