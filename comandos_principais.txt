@@ -110,7 +110,7 @@ Mensagem após o comando: fast-foward[avanço rápido] (Ocorre apenas se não existi
 
 #git checkout -b feature02
 
-*Situação: em master é criado um arquivo e em feature02 é criado outro. Nesse caso, temos duas branches com arquivos distintos (uma divergência é percebida. Lembrando que divergência é diferente de conflito).
+*Situação: em master é criado um arquivo e em feature02 é criado outro. Nesse caso, temos duas branches com arquivos distintos (uma divergência é percebida. Lembrando que divergência é diferente de conflito. Divergência = "seguir um caminho diferente").
 
 -- Visualizar os caminhos dos commits (uma visão "mais gráfica") e identificar divergências
 
