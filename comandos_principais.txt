@@ -290,7 +290,7 @@ Obs.: nesse momento as atualizações são obtidas para a referência "origin/master
 
 # git diff master origin/master
 
-* Realizando o merge
+* Realizando o merge (estando na branch master)
 
 # git merge origin/master
 
@@ -301,4 +301,114 @@ Obs.: Caso existam conflitos será preciso, naturalmente, tratá-los antes de real
 # git log --oneline --decorate --all --graph
 
 
-------------- Aula05 ---------------------
+------------- Aula05 (desfazendo as coisas) ---------------------
+
+Fluxo básico de criação e commit de um novo arquivo em master
+echo k > k.txt
+
+git status (ver status no projeto)
+
+git add -A
+
+git commit -m "arquivo k.txt"
+
+git status (nova verificação)
+
+-- Como desfazer um commit realizado por engano
+git reset <commit>
+
+Com o comando acima realizamos uma mudança de referência. Podemos, por exemplo, indicar um commit anterior para master "apontar". O commit do arquivo k.txt não é excluído, mas passamos a ter uma nova referência para master (uma espécie de atualização de referência).
+
+3 modos de reset : soft, mixed (padrão), hard
+
+-- soft
+
+** git soft (ao realizar o reset, o arquivo que estava presente no commit ficará na staging area, pronto para ser "commitado" novamente se necessário)
+
+-> reset soft 8f11 (8f11 é o início do hash do commit anterior)
+git reset --soft 8f11
+
+verificação da árvore de commits
+git log --oneline --decorate --all --graph
+
+obs.: o commit do arquivo k.txt não aparece na listagem
+obs2.: o arquivo k.txt é apresentado como um arquivo "staged" (pronto para ser "commitado")
+
+-- mixed
+-- novo commit (commit para o arquivo k.txt)
+git commit -m "arquivo k.txt"
+
+git reset --mixed 8f11 (poderia ser apenas git reset 8f11. Isso devido o fato de o reset padrão ser o "mixed")
+
+obs.: o commit do arquivo k.txt não aparece na listagem (da mesma forma que testado com o git reset --soft <commit>)
+obs2.: o arquivo k.txt é apresentado como "untracked". Em outras palavras, o arquivo não fica na staging area
+
+
+-- hard
+# incluir arquivo k.txt na staging area e depois "commitar"
+git add .
+git commit -m "arquivo k.txt"
+
+
+# comando
+git reset --hard 8f11
+
+-- Aparecerá uma mensagem semelhante a esta (relacionada a referência do HEAD)
+HEAD is now at 8f11991 [texto do commit]
+
+-- ao realizar o git status nenhum arquivo aparecerá (é como se o arquivo k.txt jamais existisse. A árvore de commits é "limpa" (fica no estado exato do commit indicado no reset).
+
+# Desfazer um reset
+
+Apliquei o git reset, mas tenho interesse em desfazer a operação. 
+
+#comandos:
+
+git reflog (armazena, por exemplo, as referências afetadas pelos resets)
+
+git reset --hard 1649 (o HEAD passará a referencia o commit indicado. Nesse exemplo, a referência é do commit do arquivo k.txt)
+
+-- Aparecerá uma mensagem semelhante a esta:
+HEAD is now at 1649e24 [mensagem commit]
+
+# verificar presença do arquivo k.txt
+ls -la
+
+-- Nova situação (envolvendo repositórios remotos)
+-- Suponho que o push foi realizado é possível desfazer a atualização feita no repositório remoto? Sim, mas é recomendado adotar outras estratégias. Por exemplo, fazer um novo commit com correções e ajustes necessários. 
+
+-- Normalmente não é possível realizar um push de uma "arvore de commits" que está "atrás" (behind) da "árvore de commits" existente no repositório remoto. Forma de entender: Tentar enviar para o repositório uma feature que apresenta incrementos/ajustes ausentes. E esses incrementos/ajustes, por sua vez, já tinham sido enviados anteriormente e, provavelmente, já estão em uso pela equipe de desenvolvimento. 
+	--> Atenção: cuidado com o reset de commits já enviados para o repositório remoto (adote outras soluções)
+
+
+-- Na aula é exemplificado como "forçar" o reset no repositório remoto (novamente: é muito importante evitar isso, pois estamos comprometando o "histórico" das atividades/implementação do projeto em questão)
+
+# Exemplo demonstrado na aula
+-- atualização do respositório remoto
+git log --oneline --decorate --all --graph
+git push origin master
+
+git reset --hard 8f11
+
+# tentativa de push tradicional
+git push origin master (aparecerá mensagem informando que a operação não pode ser feita)
+
+# Realizar push forçado
+
+git push origin master -f (ou --force)
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
